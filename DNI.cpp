@@ -23,6 +23,9 @@ int DNI::get_value(void)
 //Sobrecarga de operadores
 bool DNI::operator==(DNI &dni_)
 {
+    comparaciones++;
+    // cout << "Comparaciones: " << comparaciones << endl;
+
     if(valor == dni_.get_value())
         return true;
     else
@@ -31,6 +34,8 @@ bool DNI::operator==(DNI &dni_)
 
 bool DNI::operator<(DNI &dni_)
 {
+    comparaciones++;
+    // cout << "Comparaciones: " << comparaciones << endl;
     if(valor < dni_.get_value())
         return true;
     else
@@ -39,6 +44,9 @@ bool DNI::operator<(DNI &dni_)
 
 bool DNI::operator>(DNI &dni_)
 {
+    comparaciones++;
+    // cout << "Comparaciones: " << comparaciones << endl;
+
     if(valor > dni_.get_value())
         return true;
     else
@@ -47,6 +55,8 @@ bool DNI::operator>(DNI &dni_)
 
 bool DNI::operator<=(DNI &dni_)
 {
+    comparaciones++;
+    // cout << "Comparaciones: " << comparaciones << endl;
     if(valor <= dni_.get_value())
         return true;
     else
@@ -55,6 +65,9 @@ bool DNI::operator<=(DNI &dni_)
 
 bool DNI::operator>=(DNI &dni_)
 {
+    comparaciones++;
+    // cout << "Comparaciones: " << comparaciones << endl;
+
     if(valor >= dni_.get_value())
         return true;
     else

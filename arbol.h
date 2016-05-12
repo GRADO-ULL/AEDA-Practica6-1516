@@ -1,5 +1,7 @@
+#pragma once
 #include <queue>
 #include "nodo.h"
+#include "DNI.h"
 
 typedef struct
 {
@@ -31,7 +33,6 @@ class Arbol{
         void eliminarRama(nodo<TDATO>* &nd, TDATO clave_dada);
         void sustituye(nodo<TDATO>* &eliminado_, nodo<TDATO>* &sust);
 
-
         //BUSCANDO
         nodo<TDATO>* buscar(TDATO x);
         nodo<TDATO>* buscarRama(nodo<TDATO>* nd, TDATO x);
@@ -56,9 +57,9 @@ nodo<TDATO>* Arbol<TDATO>::buscarRama(nodo<TDATO>* nd, TDATO x)
 {
     if(nd == NULL)
         return NULL;
-    if(x == nd->get_dato())
+    if(x == nd->dato)
         return nd;
-    if(x < nd->get_dato())
+    if(x < nd->dato)
         return  buscarRama(nd->izq, x);
     return buscarRama(nd->der, x);
 }
@@ -68,7 +69,7 @@ nodo<TDATO>* Arbol<TDATO>::buscarRama(nodo<TDATO>* nd, TDATO x)
 template <class TDATO>
 nodo<TDATO>* Arbol<TDATO>::get_raiz(void)
 {
-    //cout << "Valor:" << raiz->get_dato() << endl;
+    //cout << "Valor:" << raiz->dato << endl;
     return raiz;
 }
 
@@ -79,6 +80,8 @@ Arbol<TDATO>::Arbol()
     num_nodos = 0;
     num_niveles = 0;
     raiz = NULL;
+    //raiz->der = NULL;
+    //raiz->izq = NULL;
 }
 
 template <class TDATO>
@@ -111,7 +114,7 @@ void Arbol<TDATO>::insertarRama(nodo<TDATO>* &nd, TDATO d)
     else
     {
         //cout << "Insertando con arbol no vacio" << endl;
-        if(d < nd->get_dato())
+        if(d < nd->dato)
         {
             //cout << "Inserto el nuevo dato por la izquierda" << endl;
             insertarRama(nd->izq, d);
@@ -162,7 +165,7 @@ void Arbol<TDATO>::sustituye(nodo<TDATO>* &eliminado_, nodo<TDATO>* &sust)
     else
     {
         //eliminado_->Info = sust->Info;
-        eliminado_->dato = sust->get_dato();
+        eliminado_->dato = sust->dato;
         eliminado_ = sust;
         sust = sust->izq;
     }
@@ -173,9 +176,9 @@ void Arbol<TDATO>::eliminarRama(nodo<TDATO>* &nd, TDATO clave_dada)
 {
     if(nd == NULL) //return NULL;
     {}
-    if(clave_dada < nd->get_dato())
+    if(clave_dada < nd->dato)
         eliminarRama(nd->izq, clave_dada);
-    else if(clave_dada > nd->get_dato())
+    else if(clave_dada > nd->dato)
         {
             eliminarRama(nd->der, clave_dada);
         }
@@ -212,11 +215,23 @@ void Arbol<TDATO>::imprimir(void)
     cout << endl;
 }
 
+bool comprobar_cola(queue<NODO_T> cola_)
+{
+    bool resultado = false; //Me devuelve false en el caso de que todo lo que haya este a null
+    while(!cola_.empty() && resultado == false)
+    {
+        if((cola_.front()).nd != NULL)
+        {
+            resultado = true; //Me devuelve true en el caso de que haya algún nodo !=  NULL
+        }
+        cola_.pop();
+    }
+    return resultado;
+}
 
 template <class TDATO>
 void Arbol<TDATO>::imprimirArbol(nodo<TDATO>* nd)
 {
-    cin.get();
     cout << "Numero de nodos del arbol:" << num_nodos << endl;
     queue<NODO_T> Q;
     
@@ -225,6 +240,7 @@ void Arbol<TDATO>::imprimirArbol(nodo<TDATO>* nd)
 
     int nivel = 0;
     int nivel_actual = 0;
+    bool final = false;
     
     raiz_.nd = raiz;
     raiz_.nivel = 0;
@@ -233,8 +249,8 @@ void Arbol<TDATO>::imprimirArbol(nodo<TDATO>* nd)
     while(!Q.empty())
     {
         NODO_T nodo_actual;
-        nodo_actual.nd = NULL;
-        nodo_actual.nivel = 0;
+        //nodo_actual.nd = NULL;
+        //nodo_actual.nivel = 0;
         
         nodo_actual = Q.front();
         Q.pop();
@@ -242,43 +258,57 @@ void Arbol<TDATO>::imprimirArbol(nodo<TDATO>* nd)
         if(nodo_actual.nivel > nivel_actual)
         {
             //cout << "Nivel del nodo actual:" << nodo_actual.nivel << ", Nivel actual:" << nivel_actual << endl;
+            if(comprobar_cola(Q))
+            {
+                final = false;
+            }
+            else
+            {
+                final = true;
+            }
+            
+            //cout << "Comprobar cola:" << comprobar_cola(Q) << ", final:" << final << endl;
             nivel_actual = nodo_actual.nivel;   
             cout << endl;
-            cout << "Nivel " << nivel_actual << ":\t";
+            cout << "Nivel " << nivel_actual << ":\t"; 
         }
         
         if(nodo_actual.nd != NULL)
         {
+            //cout << "Entro1" << endl;
             //Hago la impresion del nodo actual
-            cout << (nodo_actual.nd)->get_dato() << "\t";
-
-            NODO_T hijo_izquierdo;
-            NODO_T hijo_derecho;
+            cout << (nodo_actual.nd)->dato << "\t";
             
             //Inserto nuevos valores en la cola
-            if((nodo_actual.nd)->izq != NULL)
+            if(final == false)
             {
-                hijo_izquierdo.nd = (nodo_actual.nd)->izq;
-                hijo_izquierdo.nivel = nodo_actual.nivel+1;
-                Q.push(hijo_izquierdo);
-            }
-            else
-            {
-                hijo_izquierdo.nd = NULL;
-                hijo_izquierdo.nivel = nodo_actual.nivel+1;
-                Q.push(hijo_izquierdo);
-            }
-            if((nodo_actual.nd)->der != NULL)
-            {
-                hijo_derecho.nd = (nodo_actual.nd)->der;
-                hijo_derecho.nivel = nodo_actual.nivel+1;    
-                Q.push(hijo_derecho);
-            }
-            else
-            {
-                hijo_derecho.nd = NULL;
-                hijo_derecho.nivel = nodo_actual.nivel+1;
-                Q.push(hijo_derecho);
+                NODO_T hijo_izquierdo;
+                NODO_T hijo_derecho;
+                
+                if((nodo_actual.nd)->izq != NULL)
+                {
+                    hijo_izquierdo.nd = (nodo_actual.nd)->izq;
+                    hijo_izquierdo.nivel = nodo_actual.nivel+1;
+                    Q.push(hijo_izquierdo);
+                }
+                else
+                {
+                    hijo_izquierdo.nd = NULL;
+                    hijo_izquierdo.nivel = nodo_actual.nivel+1;
+                    Q.push(hijo_izquierdo);
+                }
+                if((nodo_actual.nd)->der != NULL)
+                {
+                    hijo_derecho.nd = (nodo_actual.nd)->der;
+                    hijo_derecho.nivel = nodo_actual.nivel+1;    
+                    Q.push(hijo_derecho);
+                }
+                else
+                {
+                    hijo_derecho.nd = NULL;
+                    hijo_derecho.nivel = nodo_actual.nivel+1;
+                    Q.push(hijo_derecho);
+                }   
             }
         }
         else
@@ -287,7 +317,6 @@ void Arbol<TDATO>::imprimirArbol(nodo<TDATO>* nd)
             cout << "[.]" << "\t";
         }
     }
-    
 }
 
 /*

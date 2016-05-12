@@ -10,7 +10,7 @@ using namespace std;
 
 class DNI;
 
-typedef int TDATO;
+typedef DNI TDATO;
 
 template<class TDATO>
 class nodo
@@ -47,6 +47,8 @@ template <class TDATO>
 nodo<TDATO>::nodo(TDATO d)
 {
     dato = d;    
+    izq = NULL;
+    der = NULL;
 }
 
 template <class TDATO>

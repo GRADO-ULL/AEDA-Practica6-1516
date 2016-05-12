@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 
 using namespace std;
@@ -7,9 +8,9 @@ class DNI
 
   private:
      int valor;
-     static int comparaciones;
-     
+
   public:
+    static int comparaciones;
     DNI();
     DNI(int v);
     ~DNI();

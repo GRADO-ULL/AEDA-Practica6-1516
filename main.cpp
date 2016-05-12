@@ -24,12 +24,12 @@ int main()
     cout << "Imprimiendo valor de nodo-hijo izquierda de n1: " << (n1->get_izquierda())->get_dato() << endl;
     */
     
-    Arbol<int> a1;
+    Arbol<TDATO> a1;
 
     int opcion_elegida = 0;
-    TDATO nuevo_dato;
-    TDATO eliminar_dato;
-    TDATO buscar_dato;
+    int nuevo_dato;
+    int eliminar_dato;
+    int buscar_dato;
     
     int contador = 0;
     cout << "-----PRACTICA 6. ARBOLES BINARIOS DE BUSQUEDA.-----" << endl;
@@ -50,22 +50,26 @@ int main()
             {
                 cout << "Nuevo nodo a insertar:";
                 cin >> nuevo_dato;
-                a1.insertar(nuevo_dato);
+                DNI aux(nuevo_dato);
+                a1.insertar(aux);
                 break;
             }
             
             case 2:
             {
                 cout << "Dato a eliminar:";
+                
                 cin >> eliminar_dato;
-                a1.eliminar(eliminar_dato);
+                DNI aux(eliminar_dato);
+                a1.eliminar(aux);
                 break;
             }
             case 3:
             {
                 cout << "Dato a buscar:";
                 cin >> buscar_dato;
-                if(a1.buscar(buscar_dato) != NULL)
+                DNI aux(buscar_dato);
+                if(a1.buscar(aux) != NULL)
                 {
                     cout << "Dato encontrado" << endl;    
                 }
@@ -86,9 +90,9 @@ int main()
                 opcion_elegida = 4;                
         }
         cout << "------------------------------------" << endl;
+        a1.imprimir();
     }while(opcion_elegida != 4);
     
-    a1.imprimir();
     cout << endl;
     
     return 0;
