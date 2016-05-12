@@ -160,6 +160,8 @@ void Arbol<TDATO>::eliminar(TDATO clave_dada)
 template <class TDATO>
 void Arbol<TDATO>::sustituye(nodo<TDATO>* &eliminado_, nodo<TDATO>* &sust)
 {
+    //cout << "Eliminado:" << eliminado_->get_dato() << endl;
+    //cout <<"Sustituido:" << sust->get_dato() << endl;
     if(sust->der != NULL)
         sustituye(eliminado_, sust->der);
     else
@@ -175,27 +177,35 @@ template <class TDATO>
 void Arbol<TDATO>::eliminarRama(nodo<TDATO>* &nd, TDATO clave_dada)
 {
     if(nd == NULL) //return NULL;
-    {}
+    {
+        return;
+    }
     if(clave_dada < nd->dato)
         eliminarRama(nd->izq, clave_dada);
-    else if(clave_dada > nd->dato)
+    else 
+    {
+        if(clave_dada > nd->dato)
         {
             eliminarRama(nd->der, clave_dada);
         }
-    else
-    {
-        nodo<TDATO>* eliminado = nd;
-        if(nd->der == NULL)
-            nd = nd->izq;
-        else if(nd->izq == NULL)
-        {
-            nd = nd->izq;
-        }
         else
         {
-            sustituye(eliminado, nd->izq);
-        }
-        delete eliminado;
+            nodo<TDATO>* eliminado = nd;
+            if(nd->der == NULL)
+                nd = nd->izq;
+            else 
+            {
+                if(nd->izq == NULL)
+                {
+                    nd = nd->der;
+                }
+                else
+                {
+                    sustituye(eliminado, nd->izq);
+                }   
+            }
+            delete(eliminado);
+        }   
     }
 }
 
@@ -215,7 +225,7 @@ void Arbol<TDATO>::imprimir(void)
     cout << endl;
 }
 
-bool comprobar_cola(queue<NODO_T> cola_)
+/*bool comprobar_cola(queue<NODO_T> cola_)
 {
     bool resultado = false; //Me devuelve false en el caso de que todo lo que haya este a null
     while(!cola_.empty() && resultado == false)
@@ -227,7 +237,7 @@ bool comprobar_cola(queue<NODO_T> cola_)
         cola_.pop();
     }
     return resultado;
-}
+}*/
 
 template <class TDATO>
 void Arbol<TDATO>::imprimirArbol(nodo<TDATO>* nd)
@@ -241,6 +251,7 @@ void Arbol<TDATO>::imprimirArbol(nodo<TDATO>* nd)
     int nivel = 0;
     int nivel_actual = 0;
     bool final = false;
+    NODO_T nodo_actual;
     
     raiz_.nd = raiz;
     raiz_.nivel = 0;
@@ -248,7 +259,6 @@ void Arbol<TDATO>::imprimirArbol(nodo<TDATO>* nd)
     cout << "Nivel " << nivel_actual << ":\t";
     while(!Q.empty())
     {
-        NODO_T nodo_actual;
         //nodo_actual.nd = NULL;
         //nodo_actual.nivel = 0;
         
@@ -258,15 +268,14 @@ void Arbol<TDATO>::imprimirArbol(nodo<TDATO>* nd)
         if(nodo_actual.nivel > nivel_actual)
         {
             //cout << "Nivel del nodo actual:" << nodo_actual.nivel << ", Nivel actual:" << nivel_actual << endl;
-            if(comprobar_cola(Q))
+            /*if(comprobar_cola(Q))
             {
                 final = false;
             }
             else
             {
                 final = true;
-            }
-            
+            }*/
             //cout << "Comprobar cola:" << comprobar_cola(Q) << ", final:" << final << endl;
             nivel_actual = nodo_actual.nivel;   
             cout << endl;
@@ -280,36 +289,32 @@ void Arbol<TDATO>::imprimirArbol(nodo<TDATO>* nd)
             cout << (nodo_actual.nd)->dato << "\t";
             
             //Inserto nuevos valores en la cola
-            if(final == false)
-            {
+            //if(final == false)
+            //{
                 NODO_T hijo_izquierdo;
                 NODO_T hijo_derecho;
                 
                 if((nodo_actual.nd)->izq != NULL)
                 {
                     hijo_izquierdo.nd = (nodo_actual.nd)->izq;
-                    hijo_izquierdo.nivel = nodo_actual.nivel+1;
-                    Q.push(hijo_izquierdo);
                 }
                 else
                 {
                     hijo_izquierdo.nd = NULL;
-                    hijo_izquierdo.nivel = nodo_actual.nivel+1;
-                    Q.push(hijo_izquierdo);
                 }
                 if((nodo_actual.nd)->der != NULL)
                 {
                     hijo_derecho.nd = (nodo_actual.nd)->der;
-                    hijo_derecho.nivel = nodo_actual.nivel+1;    
-                    Q.push(hijo_derecho);
                 }
                 else
                 {
                     hijo_derecho.nd = NULL;
-                    hijo_derecho.nivel = nodo_actual.nivel+1;
-                    Q.push(hijo_derecho);
                 }   
-            }
+                
+                hijo_izquierdo.nivel = nivel_actual+1;
+                hijo_derecho.nivel = nivel_actual+1;
+                Q.push(hijo_izquierdo);
+                Q.push(hijo_derecho);
         }
         else
         {

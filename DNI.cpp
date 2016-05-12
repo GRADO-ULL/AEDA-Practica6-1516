@@ -81,4 +81,18 @@ ostream& operator<<(ostream &salida,const DNI dni_)
     return salida;
 }
 
+void DNI::set_value(int valor_)
+{
+    valor = valor_;    
+}
+
+//Lectura
+istream& operator >>(istream& sin, DNI& dni_)
+{
+     int auxiliar = 0;
+     sin >> auxiliar;
+     dni_.set_value(auxiliar);
+     return sin;
+}
+
 int DNI::comparaciones = 0;

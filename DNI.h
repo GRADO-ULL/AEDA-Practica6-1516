@@ -15,7 +15,8 @@ class DNI
     DNI(int v);
     ~DNI();
     int get_value(void);
-
+    void set_value(int valor_);
+    
     //Sobrecarga de operadores
     bool operator==(DNI &dni_);
     bool operator<(DNI &dni_);
@@ -24,5 +25,6 @@ class DNI
     bool operator>=(DNI &dni_);
 
     //Impresión
-    friend ostream& operator<<(ostream &salida, const DNI dni_);
+    friend ostream& operator <<(ostream &salida, const DNI dni_);
+    friend istream& operator >>(istream& sin, DNI& n);
 };
