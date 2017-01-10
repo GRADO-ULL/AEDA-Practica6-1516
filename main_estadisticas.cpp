@@ -72,11 +72,11 @@ void generar_aleatorios(vector<int> &v, int limite_inferior, int limite_superior
          aux_p = limite_inferior+rand()%(((limite_superior + 1 ) -1) -limite_inferior);
       }
       v[i] = aux_p;
-      cout << v[i];
+      /*cout << v[i];
       if(i < v.size()-1)
       {
         cout << ","; 
-      }
+      }*/
   }
 }
 
@@ -98,23 +98,10 @@ int main()
     cin >> numero_pruebas;
     inicializacion_vector(muestra,a1, numero_nodos*2);
     cout << "-----------------------------" << endl;
-    cout << "Informacion disponible:" << endl;
-    cout << "Vector de DNI aleatorios de dimension " << numero_nodos*2 << ": " << endl;;
-    for(int i=0;i<muestra.size();i++)
-    {
-        cout << muestra[i];
-        if(i < (muestra.size()-1))
-        {
-          cout << ",";
-        }
-    }
-    cout << endl << endl;
-    a1.imprimir();
-    cout << endl;
-    cout << "-----------------------------" << endl;
+
     cout << "Fase de Busqueda." << endl;
     cout << "Genero aleatorios para las pruebas." << endl;
-    cout << "Vector de pruebas de dimension " << numero_pruebas << ": ";
+    //cout << "Vector de pruebas de dimension " << numero_pruebas << ": ";
     pruebas_busqueda.resize(numero_pruebas);
     
     generar_aleatorios(pruebas_busqueda,0,numero_nodos);
@@ -122,7 +109,7 @@ int main()
     cout << endl;
     int maximo_busqueda = 0;
     int minimo_busqueda = 100000000;
-    int suma_busqueda = 0;
+    double suma_busqueda = 0;
     double media_busqueda = 0;
     
     DNI::comparaciones = 0;
@@ -149,11 +136,11 @@ int main()
     pruebas_insercion.resize(numero_pruebas);
     
     cout << "Genero aleatorios para las pruebas." << endl;
-    cout << "Vector de pruebas de dimension " << numero_pruebas << ": ";
+    //cout << "Vector de pruebas de dimension " << numero_pruebas << ": ";
     
     int maximo_insercion = 0;
     int minimo_insercion = 100000000;
-    int suma_insercion = 0;
+    double suma_insercion = 0;
     double media_insercion = 0;
     
     //Inicializando vector

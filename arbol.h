@@ -16,34 +16,30 @@ class Arbol{
         int num_niveles;
         int num_nodos;
         nodo<TDATO>* raiz;
+        void podar(nodo<TDATO>* &nd);
+        void insertarRama(nodo<TDATO>* &nd, TDATO d);
+        nodo<TDATO>* get_raiz(void);
+        bool eshoja(nodo<TDATO>* nd);
+        nodo<TDATO>* buscarRama(nodo<TDATO>* nd, TDATO x);
+        void imprimirArbol(nodo<TDATO>* nd);
+        void eliminarRama(nodo<TDATO>* &nd, TDATO clave_dada);
+        void sustituye(nodo<TDATO>* &eliminado_, nodo<TDATO>* &sust);
+        bool si_vacio(void);
+        
     public:
         Arbol();
         ~Arbol();
         //int get_niveles(void);
-
-        bool si_vacio(void);
-
+        
         void insertar(TDATO d);
-        void podar(nodo<TDATO>* &nd);
-        void insertarRama(nodo<TDATO>* &nd, TDATO d);
-
-        nodo<TDATO>* get_raiz(void);
-        bool eshoja(nodo<TDATO>* nd);
+        
         void eliminar(TDATO clave_dada);
-        void eliminarRama(nodo<TDATO>* &nd, TDATO clave_dada);
-        void sustituye(nodo<TDATO>* &eliminado_, nodo<TDATO>* &sust);
-
+        
         //BUSCANDO
         nodo<TDATO>* buscar(TDATO x);
-        nodo<TDATO>* buscarRama(nodo<TDATO>* nd, TDATO x);
         
         //Imprimiendo arbol
         void imprimir(void);
-        void imprimirArbol(nodo<TDATO>* nd);
-        
-        //Impresión
-        //template <class TDATO>
-        //friend ostream& operator<<(ostream &salida, const Arbol<TDATO> &arbol_);        
 };
 
 template <class TDATO>
@@ -173,6 +169,7 @@ void Arbol<TDATO>::sustituye(nodo<TDATO>* &eliminado_, nodo<TDATO>* &sust)
     }
 }
 
+    
 template <class TDATO>
 void Arbol<TDATO>::eliminarRama(nodo<TDATO>* &nd, TDATO clave_dada)
 {

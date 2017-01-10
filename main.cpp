@@ -10,19 +10,6 @@ using namespace std;
 
 int main()
 {
-    /*DNI dni1(12345678);
-    DNI dni2(87654321);
-    DNI dni3(11111111);
-    
-    nodo<TDATO>* n2 = new nodo<TDATO>(dni1);
-    nodo<TDATO>* n3 = new nodo<TDATO>(dni2);
-    nodo<TDATO>* n1 = new nodo<TDATO>(dni3, n2, n3);
-
-    cout << "Probando clase nodo y metodos:" << endl;
-    cout << "Imprimiendo valor de raiz: " << n1->get_dato() << endl;    
-    cout << "Imprimiendo valor de nodo-hijo derecha de n1: " << (n1->get_derecha())->get_dato() << endl;
-    cout << "Imprimiendo valor de nodo-hijo izquierda de n1: " << (n1->get_izquierda())->get_dato() << endl;
-    */
     
     Arbol<TDATO> a1;
 
